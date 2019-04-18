@@ -11,7 +11,7 @@ import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.components.weather import (
     ATTR_WEATHER_HUMIDITY, ATTR_WEATHER_PRESSURE, ATTR_WEATHER_TEMPERATURE,
-    ATTR_WEATHER_VISIBILITY)
+    ATTR_WEATHER_VISIBILITY, ATTR_WEATHER_WIND_SPEED)
 from homeassistant.const import (
     ATTR_ATTRIBUTION, ATTR_LATITUDE, ATTR_LONGITUDE, CONF_API_KEY,
     CONF_MONITORED_CONDITIONS, CONF_NAME, HTTP_OK, LENGTH_CENTIMETERS,
@@ -27,8 +27,9 @@ ATTR_LAST_UPDATE = 'last_update'
 ATTR_STATION_NAME = 'station_name'
 ATTR_WEATHER_PRECIPITATION = 'precipitation'
 ATTR_WEATHER_SNOW = 'snow'
+ATTR_WEATHER_WIND_SPEED = 'wind_speed'
 
-CONF_ATTRIBUTION = 'Data provided by AEMET (Agencia Estatal de Meteorología)'
+CONF_ATTRIBUTION = 'Data provided by AEMET'
 CONF_STATION_ID = 'station_id'
 
 DEFAULT_NAME = 'AEMET'
@@ -42,6 +43,7 @@ SENSOR_TYPES = {
     ATTR_WEATHER_PRECIPITATION: ['Precipitation', 'mm', 'mdi:weather-pouring'],
     ATTR_WEATHER_SNOW: ['Snow', LENGTH_CENTIMETERS, 'mdi:snowflake'],
     ATTR_WEATHER_VISIBILITY: ['Visibility', LENGTH_KILOMETERS, 'mdi:eye'],
+    ATTR_WEATHER_WIND_SPEED: ['Wind speed', 'm/s', 'mdi:weather-windy'],
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -122,6 +124,7 @@ class AemetData:
     API_URL_BASE = 'https://opendata.aemet.es/opendata/api'
     API_STATION_ENDPOINT = '/observacion/convencional/datos/estacion/{}'
 
+
     def __init__(self, api_key, station_id):
         """Initialize the data object."""
         self._station_id = station_id
@@ -181,6 +184,8 @@ class AemetData:
             state[ATTR_WEATHER_VISIBILITY] = record['vis']
         if 'nieve' in record:
             state[ATTR_WEATHER_SNOW] = record['nieve']
+        if 'vv' in record:
+            state[ATTR_WEATHER_WIND_SPEED] = record['vv']
         self.data = state
 
     def get_data(self, variable):
