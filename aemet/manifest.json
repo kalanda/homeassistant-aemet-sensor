@@ -1,0 +1,8 @@
+{
+  "domain": "aemet",
+  "name": "Agencia estatal de meteorologia",
+  "documentation": "https://github.com/kalanda/homeassistant-custom-components/tree/master/aemet",
+  "dependencies": [],
+  "codeowners": ["@kalanda"],
+  "requirements": []
+}

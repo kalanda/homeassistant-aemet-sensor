@@ -2,6 +2,9 @@
 Sensor support for AEMET (Agencia Estatal de Metereología) data service.
 """
 
+DOMAIN='aemet'
+
+
 from datetime import timedelta
 from logging import getLogger
 
