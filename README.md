@@ -2,9 +2,14 @@
 
 # AEMET Sensor
 
-Sensor support for AEMET (Agencia Estatal de Metereología) weather data service.
+Sensor support for AEMET (Agencia Estatal de Metereología) weather data service of Spain.
 
-## Installation
+You need to get your "api_key" and find the nearest "station_id" at https://opendata.aemet.es/
+in order to finish the configuration.
+
+Install is available using [HACS](https://github.com/custom-components/hacs) or you can install manually.
+
+## Manual Installation
 
 1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory (folder) there, you need to create it.
@@ -18,12 +23,11 @@ in order to finish the configuration.
 ## Example configuration.yaml
 
 ```
-# configuration.yaml
 sensor:
   - platform: aemet
     name: AEMET
-    api_key: !secret aemet_api_key
-    station_id: !secret aemet_station_id
+    api_key: [ YOUR_AEMET_API_KEY ]
+    station_id: [ YOUR_AEMET_STATION_ID ]
     monitored_conditions:
       - temperature
       - humidity
