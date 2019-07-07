@@ -1,8 +1,4 @@
-# homeassistant-custom-components
-My own custom components for Home Assistant
-
-
-## AEMET Sensor
+# AEMET Sensor
 
 Sensor support for AEMET (Agencia Estatal de Metereología) data service.
 
