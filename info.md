@@ -2,7 +2,7 @@
 
 Sensor support for AEMET (Agencia Estatal de Metereología) weather data service of Spain.
 
-You need to get your "api_key" and find the nearest "station_id" at https://opendata.aemet.es/
+You need to get your `api_key` and find the nearest `station_id` at https://opendata.aemet.es/
 in order to finish the configuration.
 
 ## Add to your configuration.yaml
