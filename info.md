@@ -5,6 +5,8 @@ Sensor support for AEMET (Agencia Estatal de Metereología) weather data service
 You need to get your `api_key` and find the nearest `station_id` at https://opendata.aemet.es/
 in order to finish the configuration.
 
+**IMPORTANT NOTE: You have to get the `station_id` from "Observación convencional" => "Datos de observación" stations. It isn't the same that in "Climatologías diarias".**
+
 ## Add to your configuration.yaml
 
 ```
