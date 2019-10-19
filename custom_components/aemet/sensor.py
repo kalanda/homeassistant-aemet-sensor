@@ -11,19 +11,37 @@ _LOGGER = getLogger(__name__)
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.components.weather import (
-    ATTR_WEATHER_HUMIDITY, ATTR_WEATHER_PRESSURE, ATTR_WEATHER_TEMPERATURE,
-    ATTR_WEATHER_VISIBILITY)
+    ATTR_WEATHER_HUMIDITY, 
+    ATTR_WEATHER_PRESSURE, 
+    ATTR_WEATHER_TEMPERATURE,
+    ATTR_WEATHER_VISIBILITY,
+)
 from homeassistant.const import (
-    ATTR_ATTRIBUTION, ATTR_LATITUDE, ATTR_LONGITUDE, CONF_API_KEY,
-    CONF_MONITORED_CONDITIONS, CONF_NAME, LENGTH_CENTIMETERS,
-    LENGTH_KILOMETERS, TEMP_CELSIUS)
+    ATTR_ATTRIBUTION, 
+    ATTR_LATITUDE, 
+    ATTR_LONGITUDE, 
+    CONF_API_KEY,
+    CONF_MONITORED_CONDITIONS, 
+    CONF_NAME, 
+    LENGTH_CENTIMETERS,
+    LENGTH_KILOMETERS, 
+    TEMP_CELSIUS
+)
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 
 from .AemetApi import (
     AemetApi,
-    ATTR_ELEVATION, ATTR_LAST_UPDATE, ATTR_STATION_NAME, ATTR_WEATHER_PRECIPITATION, 
-    ATTR_WEATHER_SNOW, ATTR_WEATHER_WIND_SPEED, CONF_ATTRIBUTION, CONF_STATION_ID)
+    ATTR_ELEVATION, 
+    ATTR_LAST_UPDATE, 
+    ATTR_STATION_NAME, 
+    ATTR_WEATHER_PRECIPITATION, 
+    ATTR_WEATHER_SNOW, 
+    ATTR_WEATHER_WIND_SPEED, 
+    ATTR_WEATHER_WIND_BEARING,
+    CONF_ATTRIBUTION, 
+    CONF_STATION_ID,
+)
 
 DEFAULT_NAME = 'AEMET'
 
@@ -35,6 +53,7 @@ SENSOR_TYPES = {
     ATTR_WEATHER_SNOW: ['Snow', LENGTH_CENTIMETERS, 'mdi:snowflake'],
     ATTR_WEATHER_VISIBILITY: ['Visibility', LENGTH_KILOMETERS, 'mdi:eye'],
     ATTR_WEATHER_WIND_SPEED: ['Wind speed', 'm/s', 'mdi:weather-windy'],
+    ATTR_WEATHER_WIND_BEARING: ['Wind bearing', 'degrees', 'mdi:compass'],
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -42,7 +61,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_API_KEY): cv.string,
     vol.Required(CONF_STATION_ID): cv.string,
     vol.Optional(CONF_MONITORED_CONDITIONS, default=list(SENSOR_TYPES)):
-        vol.All(cv.ensure_list, vol.Length(min=1), [vol.In(SENSOR_TYPES)]),
+    vol.All(cv.ensure_list, vol.Length(min=1), [vol.In(SENSOR_TYPES)]),
 })
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
@@ -67,42 +86,42 @@ class AemetSensor(Entity):
 
     def __init__(self, aemetApi, variable, name):
         """Initialize the sensor."""
-        self.aemetApi = aemetApi
-        self.variable = variable
-        self.client_name = name
+        self._aemetApi = aemetApi
+        self._variable = variable
+        self._client_name = name
 
     @property
     def name(self):
         """Return the name of the sensor."""
-        return '{} {}'.format(self.client_name, self.variable)
+        return '{} {}'.format(self._client_name, self._variable)
 
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.aemetApi.get_data(self.variable)
+        return self._aemetApi.get_data(self._variable)
 
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement of this entity, if any."""
-        return SENSOR_TYPES[self.variable][1]
+        return SENSOR_TYPES[self._variable][1]
 
     @property
     def icon(self):
         """Return sensor specific icon."""
-        return SENSOR_TYPES[self.variable][2]
+        return SENSOR_TYPES[self._variable][2]
 
     @property
     def device_state_attributes(self):
         """Return the device state attributes."""
         return {
             ATTR_ATTRIBUTION: CONF_ATTRIBUTION,
-            ATTR_STATION_NAME: self.aemetApi.get_data(ATTR_STATION_NAME),
-            ATTR_LATITUDE: self.aemetApi.get_data(ATTR_LATITUDE),
-            ATTR_LONGITUDE: self.aemetApi.get_data(ATTR_LONGITUDE),
-            ATTR_ELEVATION: self.aemetApi.get_data(ATTR_ELEVATION),
-            ATTR_LAST_UPDATE: self.aemetApi.get_data(ATTR_LAST_UPDATE),
+            ATTR_STATION_NAME: self._aemetApi.get_data(ATTR_STATION_NAME),
+            ATTR_LATITUDE: self._aemetApi.get_data(ATTR_LATITUDE),
+            ATTR_LONGITUDE: self._aemetApi.get_data(ATTR_LONGITUDE),
+            ATTR_ELEVATION: self._aemetApi.get_data(ATTR_ELEVATION),
+            ATTR_LAST_UPDATE: self._aemetApi.get_data(ATTR_LAST_UPDATE),
         }
 
     def update(self):
         """Delegate update to data class."""
-        self.aemetApi.update()
+        self._aemetApi.update()

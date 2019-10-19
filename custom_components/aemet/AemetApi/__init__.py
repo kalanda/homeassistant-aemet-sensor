@@ -6,10 +6,16 @@ from homeassistant.util import Throttle
 _LOGGER = getLogger(__name__)
 
 from homeassistant.components.weather import (
-    ATTR_WEATHER_HUMIDITY, ATTR_WEATHER_PRESSURE, ATTR_WEATHER_TEMPERATURE,
-    ATTR_WEATHER_VISIBILITY)
+    ATTR_WEATHER_HUMIDITY, 
+    ATTR_WEATHER_PRESSURE, 
+    ATTR_WEATHER_TEMPERATURE,
+    ATTR_WEATHER_VISIBILITY
+)
 from homeassistant.const import (
-    ATTR_LATITUDE, ATTR_LONGITUDE, HTTP_OK)
+    ATTR_LATITUDE, 
+    ATTR_LONGITUDE, 
+    HTTP_OK
+)
 
 ATTR_ELEVATION = 'elevation'
 ATTR_LAST_UPDATE = 'last_update'
@@ -17,6 +23,7 @@ ATTR_STATION_NAME = 'station_name'
 ATTR_WEATHER_PRECIPITATION = 'precipitation'
 ATTR_WEATHER_SNOW = 'snow'
 ATTR_WEATHER_WIND_SPEED = 'wind_speed'
+ATTR_WEATHER_WIND_BEARING = 'wind_bearing'
 
 CONF_ATTRIBUTION = 'Data provided by AEMET'
 CONF_STATION_ID = 'station_id'
@@ -88,7 +95,9 @@ class AemetApi:
         if 'nieve' in record:
             state[ATTR_WEATHER_SNOW] = record['nieve']
         if 'vv' in record:
-            state[ATTR_WEATHER_WIND_SPEED] = record['vv']
+            state[ATTR_WEATHER_WIND_SPEED] = record['vv'] * 3.6 # m/s to km/h
+        if 'dv' in record:
+            state[ATTR_WEATHER_WIND_BEARING] = record['dv']
         self.data = state
 
     def get_data(self, variable):
