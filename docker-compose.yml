@@ -1,0 +1,14 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:stable
+    ports:
+      - "8123:8123"
+    volumes:
+      - ./.config:/config
+      - ./custom_components:/config/custom_components
+    environment:
+      - TZ=Europe/Madrid
+    restart: always
+    network_mode: bridge
