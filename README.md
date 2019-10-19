@@ -40,3 +40,15 @@ sensor:
       - wind_speed
       - wind_bearing
 ```
+
+You can also configure the component as a weather service.
+
+```
+weather:
+  - platform: aemet
+    name: AEMET
+    api_key: [ YOUR_AEMET_API_KEY ]
+    station_id: [ YOUR_AEMET_STATION_ID ]
+```
+
+*Please*, note that because of how AEMET is retrieving the data, the weather component can't show you the current condition (sunny, cloudy, ...) and neither the forecast, just current values for weather sensors.
