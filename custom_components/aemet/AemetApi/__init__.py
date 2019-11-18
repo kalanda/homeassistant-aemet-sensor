@@ -23,7 +23,27 @@ ATTR_STATION_NAME = 'station_name'
 ATTR_WEATHER_PRECIPITATION = 'precipitation'
 ATTR_WEATHER_SNOW = 'snow'
 ATTR_WEATHER_WIND_SPEED = 'wind_speed'
+ATTR_WEATHER_WIND_MAX_SPEED = 'wind_max_speed'
 ATTR_WEATHER_WIND_BEARING = 'wind_bearing'
+
+ATTR_MAPPINGS = {
+    ATTR_LONGITUDE: 'lon',
+    ATTR_LATITUDE: 'lat',
+    ATTR_ELEVATION: 'alt',
+    ATTR_STATION_NAME: 'ubi',
+    ATTR_WEATHER_PRECIPITATION: 'prec',
+    ATTR_WEATHER_PRESSURE: 'pres',
+    ATTR_WEATHER_TEMPERATURE: 'ta',
+    ATTR_WEATHER_HUMIDITY: 'hr',
+    ATTR_LAST_UPDATE: 'fint',
+    ATTR_WEATHER_VISIBILITY: 'vis',
+    ATTR_WEATHER_SNOW: 'nieve',
+    ATTR_WEATHER_WIND_SPEED: 'vv',
+    ATTR_WEATHER_WIND_MAX_SPEED: 'vmax',
+    ATTR_WEATHER_WIND_BEARING: 'dv'
+}
+
+MS_TO_KMH_ATTRS = [ATTR_WEATHER_WIND_SPEED, ATTR_WEATHER_WIND_MAX_SPEED]
 
 CONF_ATTRIBUTION = 'Data provided by AEMET'
 CONF_STATION_ID = 'station_id'
@@ -72,32 +92,12 @@ class AemetApi:
     def set_data(self, record):
         """Set data using the last record from API."""
         state = {}
-        if 'lon' in record:
-            state[ATTR_LONGITUDE] = record['lon']
-        if 'lat' in record:
-            state[ATTR_LATITUDE] = record['lat']
-        if 'alt' in record:
-            state[ATTR_ELEVATION] = record['alt']
-        if 'ubi' in record:
-            state[ATTR_STATION_NAME] = record['ubi']
-        if 'prec' in record:
-            state[ATTR_WEATHER_PRECIPITATION] = record['prec']
-        if 'pres' in record:
-            state[ATTR_WEATHER_PRESSURE] = record['pres']
-        if 'ta' in record:
-            state[ATTR_WEATHER_TEMPERATURE] = record['ta']
-        if 'hr' in record:
-            state[ATTR_WEATHER_HUMIDITY] = record['hr']
-        if 'fint' in record:
-            state[ATTR_LAST_UPDATE] = record['fint']
-        if 'vis' in record:
-            state[ATTR_WEATHER_VISIBILITY] = record['vis']
-        if 'nieve' in record:
-            state[ATTR_WEATHER_SNOW] = record['nieve']
-        if 'vv' in record:
-            state[ATTR_WEATHER_WIND_SPEED] = record['vv'] * 3.6 # m/s to km/h
-        if 'dv' in record:
-            state[ATTR_WEATHER_WIND_BEARING] = record['dv']
+        for attr_name, attr_value in ATTR_MAPPINGS.items():
+            if attr_value in record:
+                state[attr_name] = record[attr_value]
+        for attr in MS_TO_KMH_ATTRS:
+            if attr in state:
+                state[attr] = round(state[attr] * 3.6, 1) # m/s to km/h
         self.data = state
 
     def get_data(self, variable):

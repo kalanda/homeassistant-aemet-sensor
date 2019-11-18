@@ -38,6 +38,7 @@ from .AemetApi import (
     ATTR_WEATHER_PRECIPITATION, 
     ATTR_WEATHER_SNOW, 
     ATTR_WEATHER_WIND_SPEED, 
+    ATTR_WEATHER_WIND_MAX_SPEED, 
     ATTR_WEATHER_WIND_BEARING,
     CONF_ATTRIBUTION, 
     CONF_STATION_ID,
@@ -52,7 +53,8 @@ SENSOR_TYPES = {
     ATTR_WEATHER_PRECIPITATION: ['Precipitation', 'mm', 'mdi:weather-pouring'],
     ATTR_WEATHER_SNOW: ['Snow', LENGTH_CENTIMETERS, 'mdi:snowflake'],
     ATTR_WEATHER_VISIBILITY: ['Visibility', LENGTH_KILOMETERS, 'mdi:eye'],
-    ATTR_WEATHER_WIND_SPEED: ['Wind speed', 'm/s', 'mdi:weather-windy'],
+    ATTR_WEATHER_WIND_SPEED: ['Wind speed', 'km/h', 'mdi:weather-windy'],
+    ATTR_WEATHER_WIND_MAX_SPEED: ['Wind max speed', 'km/h', 'mdi:weather-windy'],
     ATTR_WEATHER_WIND_BEARING: ['Wind bearing', 'degrees', 'mdi:compass'],
 }
 
