@@ -23,6 +23,7 @@ sensor:
       - snow
       - visibility
       - wind_speed
+      - wind_max_speed
       - wind_bearing
 ```
 
