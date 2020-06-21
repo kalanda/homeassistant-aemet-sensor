@@ -30,8 +30,8 @@ in order to finish the configuration.
 sensor:
   - platform: aemet
     name: "AEMET"
-    api_key: "[ YOUR_AEMET_API_KEY ]"
-    station_id: "[ YOUR_AEMET_STATION_ID ]"
+    api_key: "YOUR_AEMET_API_KEY"
+    station_id: "YOUR_AEMET_STATION_ID"
     monitored_conditions:
       - temperature
       - humidity
@@ -50,8 +50,8 @@ You can also configure the component as a weather service.
 weather:
   - platform: aemet
     name: "AEMET"
-    api_key: "[ YOUR_AEMET_API_KEY ]"
-    station_id: "[ YOUR_AEMET_STATION_ID ]"
+    api_key: "YOUR_AEMET_API_KEY"
+    station_id: "YOUR_AEMET_STATION_ID"
 ```
 
 *Please*, note that because of how AEMET is retrieving the data, the weather component can't show you the current condition (sunny, cloudy, ...) and neither the forecast, just current values for weather sensors.
