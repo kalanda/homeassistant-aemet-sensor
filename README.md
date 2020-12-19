@@ -32,6 +32,7 @@ sensor:
     name: "AEMET"
     api_key: "YOUR_AEMET_API_KEY"
     station_id: "YOUR_AEMET_STATION_ID"
+    scan_interval: 120
     monitored_conditions:
       - temperature
       - humidity
