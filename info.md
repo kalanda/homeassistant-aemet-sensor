@@ -1,3 +1,15 @@
+```
+IMPORTANT NOTE:
+Home Assistant now has native support for AEMET, so I've decided to stop this component development.
+
+NOTA IMPORTANTE:
+Home Assistant ahora soporta AEMET de forma nativa, así que he decidido dejar de evolucionar este componente.
+```
+
+https://www.home-assistant.io/integrations/aemet/
+
+---
+
 # AEMET Sensor
 
 Sensor support for AEMET (Agencia Estatal de Metereología) weather data service of Spain.
